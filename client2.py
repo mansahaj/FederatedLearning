@@ -66,38 +66,3 @@ input_shape = (x_train.shape[1],)  # Assuming x_train is a DataFrame or a 2D Num
 model = create_ann_model(input_shape)  # or create_cnn_model(input_shape)
 client = KerasFlowerClient(model, x_train, y_train, x_test, y_test)
 fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=client.to_client())
-
-# def create_model():
-#     model = LogisticRegression()
-#     return model
-
-# class FlowerClient(fl.client.NumPyClient):
-#     def __init__(self, model, x_train, y_train, x_test, y_test):
-#         self.model = model
-#         self.x_train, self.y_train = x_train, y_train
-#         self.x_test, self.y_test = x_test, y_test
-#         self.model.fit(self.x_train, self.y_train)
-
-#     def get_parameters(self, config=None):  # Include default value for config
-#         # Serialize the model to a bytes object
-#         return [self.model.coef_.flatten(), self.model.intercept_]
-    
-#     def set_parameters(self, parameters):
-#         self.model.coef_ = np.array(parameters[0]).reshape(1, -1)
-#         self.model.intercept_ = np.array(parameters[1])
-
-#     def fit(self, parameters, config):
-#         self.set_parameters(parameters)
-#         self.model.fit(self.x_train, self.y_train)
-#         return self.get_parameters(), len(self.x_train), {}
-    
-#     def evaluate(self, parameters, config):
-#         self.set_parameters(parameters)
-#         accuracy = self.model.score(self.x_test, self.y_test)
-#         print(accuracy)
-#         return float(accuracy), len(self.x_test), {"accuracy": float(accuracy)}
-    
-# x_train, x_test, y_train, y_test = load_data("/Users/mansahaj/cybersecurity_nrc/MachineLearningCVE/Friday-WorkingHours-Morning.pcap_ISCX.csv")
-# model = create_model()
-# client = FlowerClient(model, x_train, y_train, x_test, y_test)
-# fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=client.to_client())
